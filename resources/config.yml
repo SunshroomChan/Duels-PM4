@@ -1,0 +1,88 @@
+---
+
+#      ____      __                    __      __
+#    /\  _`\   /\ \                   /\ \  __/\ \
+#   \ \,\L\_\ \ \ \/'\     __  __    \ \ \/\ \ \ \     __     _ __    ____
+#    \/_\__ \  \ \ , <    /\ \/\ \    \ \ \ \ \ \ \  /'__`\  /\`'__\ /',__\
+#      /\ \L\ \ \ \ \\`\  \ \ \_\ \    \ \ \_/ \_\ \/\ \L\.\_\ \ \/ /\__, `\
+#      \ `\____\ \ \_\ \_\ \/`____ \    \ `\___x___/\ \__/.\_\\ \_\ \/\____/
+#       \/_____/  \/_/\/_/  `/___/> \    '\/__//__/  \/__/\/_/ \/_/  \/___/
+#                              /\___/
+#                              \/__/
+
+# SkyWars v1.2.0 PRO by VixikHD
+# - Main configuration file
+configVersion: 1.2.0
+
+# DataProviders: YAML, JSON, MySQL, SQLite
+# On chosen DataProver will be saved arena data and kits
+dataProvider: YAML
+
+# If you using MySQL data provider fill this
+# MySQL isn't as stable as other data providers, I'm working on fix
+mysqlLogin:
+  host: 127.0.0.1
+  username: root
+  password:
+
+# Ban useful command for game
+banned-commands:
+  - /give
+  - /gamemode
+  - /kill
+  - /hub
+  - /kick
+  - /tp
+  - /effect
+
+# Chat
+chat:
+  # Enable custom chat format
+  custom: true
+  # Set custom chat format in skywars game
+  format: '§3%player: %message'
+
+# Have you map with glass cages? enable it there
+# Modes: enable | disable | detect (detects if under player is glass)
+cage: enable
+
+# WaterDog proxy support
+waterdog:
+  # Enable if you want connect player to random arena on join
+  enabled: false
+  # Player will be reconnected to this server when he wants to leave the arena.
+  lobbyServer: District
+
+# Use portals, plugin automatically found empty arena for game.
+# Functions (1): forcejoin
+portals:
+  ender:
+    enabled: false
+    function: forcejoin
+    worlds: ['ender']
+  nether:
+    enabled: true
+    function: forcejoin
+    worlds: ['nether']
+
+# Create custom joinsign design here!
+joinsign:
+  custom: false
+  # You can use there %phase, %ingame, %max, %map
+  format:
+    line-1: '§3[SkyWars]'
+    line-2: '%phase'
+    line-3: '§6%ingame / %max'
+    line-4: '§1Map: %map'
+
+sounds:
+  enabled: true
+  # sounds: AnvilUseSound, ClickSound
+  start-tick: 
+  start: 
+
+leaderboard:
+  kills: [] # Put position inside (eg. [127, 42, 153])
+  wins: []
+
+...
