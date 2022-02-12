@@ -9,11 +9,10 @@ instagram: https://instagram.com/im.zalpha
 copyright: Full copyright to GamakCz, Thanks to he for give and respon postifi
 
 extensions: [mysqli, yaml, json, zip]
-depend: [Specter]
-
+depend: [ScoreboardsAPI]
 permissions:
   dues.cmd:
-    description: Permission to all SkyWars commands
+    description: Permission to all Duels commands
     default: op
     children:
       dues.cmd.help:
