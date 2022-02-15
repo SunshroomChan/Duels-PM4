@@ -8,7 +8,7 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
 use vixikhd\duels\arena\Arena;
-use vixikhd\skywars\Stats;
+use vixikhd\duels\Stats;
 
 /**
  * Class API

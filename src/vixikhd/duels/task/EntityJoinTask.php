@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace vixikhd\duels\task;
 
 use pocketmine\scheduler\Task;
+use pocketmine\world\World;
 use pocketmine\Server;
 use vixikhd\duels\arena\Arena;
 use vixikhd\duels\entity\types\JoinEntity;
@@ -16,9 +17,9 @@ class EntityJoinTask extends Task
 	/**
 	 * @inheritDoc
 	 */
-	public function onRun(int $currentTick): void
+	public function onRun(): void
 	{
-		foreach (Server::getInstance()->getDefaultLevel()->getEntities() as $entity) {
+		foreach (Server::getInstance()->getWorldManager()->getDefaultWorld()->getEntities() as $entity) {
 			if ($entity instanceof JoinEntity){
 				$entity->setNameTagAlwaysVisible(true);
 				$entity->setNameTagVisible(true);

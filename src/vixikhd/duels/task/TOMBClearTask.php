@@ -18,7 +18,7 @@ class TOMBClearTask extends Task
         $this->entity = $entity;
     }
 
-    public function onRun(int $tick) : void
+    public function onRun() : void
     {
         $this->entity->flagForDespawn();
     }

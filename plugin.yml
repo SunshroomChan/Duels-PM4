@@ -9,45 +9,46 @@ instagram: https://instagram.com/im.zalpha
 copyright: Full copyright to GamakCz, Thanks to he for give and respon postifi
 
 extensions: [mysqli, yaml, json, zip]
-depend: [ScoreboardsAPI]
+depend: [ScoreboardAPI]
 permissions:
-  dues.cmd:
+  duels.command:
+    default: op
+  duels.cmd:
     description: Permission to all Duels commands
     default: op
-    children:
-      dues.cmd.help:
-        description: Permission for /duels help
-        default: op
-      duels.cmd.create:
-        description: Permission for /duels create
-        default: op
-      duels.cmd.remove:
-        description: Permission for /duels remove
-        default: op
-      duels.cmd.set:
-        description: Permission for /duels set
-        default: op
-      duels.cmd.arenas:
-        description: Permission for /duels arenas
-        default: op
-      duels.cmd.start:
-        description: Permission for /duels start
-        default: op
-      duels.cmd.test:
-        description: Permission for /duels test
-        default: true
-      duels.cmd.win:
-        description: Permission for /duels win
-        default: true
-      duels.cmd.kick:
-        description: Permission for /duels kick
-        default: op
-      duels.cmd.leave:
-        description: Permission for /duels leave
-        default: true
-      duels.cmd.join:
-        description: Permission for /duels join
-        default: true
-      duels.cmd.random:
-        description: Permission for /duels random
-        default: true
+  duels.cmd.help:
+    description: Permission for /duels help
+    default: op
+  duels.cmd.create:
+     description: Permission for /duels create
+     default: op
+  duels.cmd.remove:
+     description: Permission for /duels remove
+     default: op
+  duels.cmd.set:
+     description: Permission for /duels set
+     default: op
+  duels.cmd.arenas:
+     description: Permission for /duels arenas
+     default: op
+  duels.cmd.start:
+     description: Permission for /duels start
+     default: op
+  duels.cmd.test:
+     description: Permission for /duels test
+     default: true
+  duels.cmd.win:
+    description: Permission for /duels win
+    default: true
+  duels.cmd.kick:
+    description: Permission for /duels kick
+    default: op
+  duels.cmd.leave:
+    description: Permission for /duels leave
+    default: true
+  duels.cmd.join:
+    description: Permission for /duels join
+    default: true
+  duels.cmd.random:
+    description: Permission for /duels random
+    default: true

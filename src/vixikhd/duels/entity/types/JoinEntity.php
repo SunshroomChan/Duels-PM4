@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace vixikhd\skywars\entity\types;
+namespace vixikhd\duels\entity\types;
 
 use pocketmine\entity\Entity;
 use pocketmine\entity\Human;
