@@ -700,32 +700,30 @@ class Arena implements Listener
     {
         if (!$this->data["enabled"]) {
             $player->sendMessage("§7§lDuels>§r§c Arena is under setup!");
-            return;
+            return false;
         }
 
         if ($this->phase !== 0) {
             $player->sendMessage("§7§lDuels>§r§c Arena is already in game!");
-            return;
+            return false;
         }
 
         if (count($this->players) >= $this->data["slots"]) {
             $player->sendMessage(Lang::getMsg("arena.join.full"));
-            return;
+            return false;
         }
 
         if ($this->inGame($player)) {
             $player->sendMessage(Lang::getMsg("arena.join.player.ingame"));
-            return;
+            return false;
         }
 
         if ($this->scheduler->startTime <= 10) {
             $player->sendMessage("§c> Arena is starting...");
-            return;
+            return false;
         }
 
-        if (!API::handleJoin($player, $this, $force)) {
-            return;
-        }
+        return API::handleJoin($player, $this, $force);
 
         $this->scheduler->teleportPlayers = isset($this->data["lobby"]) || $this->data["lobby"] !== null;
 

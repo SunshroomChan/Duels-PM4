@@ -197,7 +197,7 @@ class Duels extends PluginBase implements Listener
             }
 
             $joined = $arena->joinToArena($player);
-            if ($joined === false) {
+            if ($joined) {
                 goto kick;
             }
         }
