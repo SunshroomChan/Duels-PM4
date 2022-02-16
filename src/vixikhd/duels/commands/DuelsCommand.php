@@ -49,7 +49,7 @@ class DuelsCommand extends Command implements PluginOwned
     public function __construct()
     {
         parent::__construct("dl", "Duels Command", "§cUse /duels help or /dl help to see list of commands!", ["dl"]);
-        $this->setPermission("duels.command");
+        $this->setPermission("duels.cmd");
     }
 
     /** var Duels $plugin */
@@ -310,7 +310,7 @@ class DuelsCommand extends Command implements PluginOwned
                     break;
                 }
 
-                $arena = $this->owningPlugin->emptyArenaChooser->getRandomArena();
+                $arena = $this->plugin->emptyArenaChooser->getRandomArena();
 
                 if ($arena === null) {
                     $sender->sendMessage("§a> All the arenas are full!");

@@ -6,11 +6,12 @@ namespace vixikhd\duels\task;
 
 use pocketmine\scheduler\Task;
 use vixikhd\duels\arena\Arena;
+use vixikhd\duels\entity\TOMBHuman;
 
 class TOMBClearTask extends Task
 {
 
-    /** @var TombHuman $entity */
+    /** @var TOMBHuman $entity */
     private $entity;
 
     public function __construct(Arena $entity)

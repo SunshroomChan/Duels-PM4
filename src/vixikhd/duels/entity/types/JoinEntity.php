@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace vixikhd\duels\entity\types;
 
-use pocketmine\entity\Entity;
+
 use pocketmine\entity\Human;
 use vixikhd\duels\entity\EntityBase;
 
@@ -13,16 +13,23 @@ class JoinEntity extends Human implements EntityBase
 	/** @var int */
 	public $entityId;
 
+    /** @var int */
+    private static $entityCount = 1;
+
 	/**
 	 * @return int
 	 */
-	public function getEntityID(): int
+	public static function nextRuntimeId(): int
 	{
-		$this->entityId = Entity::$entityCount++;
-		return $this->entityId;
+		return self::$entityCount++;
 	}
 
-	/**
+    public function getEntityID(): int
+    {
+        return self::$entityCount++;
+    }
+
+    /**
 	 * @return string
 	 */
 	public function getName(): string

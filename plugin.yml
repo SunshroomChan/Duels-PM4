@@ -1,42 +1,37 @@
 name: Duels
 api: [4.2.0]
-version: 9.8.8
+version: 1.0.0
 main: vixikhd\duels\Duels
-author: GamakCZ remake ZAlpha
-description: Pro version 9.8.8, Pro version 9.9.9 full release to privte with hourse and pigman, Sorry for custom kit
-website: https://github.com/GamakCZ/SkyWars
-instagram: https://instagram.com/im.zalpha
-copyright: Full copyright to GamakCz, Thanks to he for give and respon postifi
+author: SunshroomChan
+description: Simplfy 1v1 plugins with new features
 
 extensions: [mysqli, yaml, json, zip]
-depend: [ScoreboardAPI]
+
 permissions:
-  duels.command:
-    default: op
   duels.cmd:
-    description: Permission to all Duels commands
+    description: Permission to all SkyWars commands
     default: op
   duels.cmd.help:
     description: Permission for /duels help
     default: op
   duels.cmd.create:
-     description: Permission for /duels create
-     default: op
+    description: Permission for /duels create
+    default: op
   duels.cmd.remove:
-     description: Permission for /duels remove
-     default: op
+    description: Permission for /duels remove
+    default: op
   duels.cmd.set:
-     description: Permission for /duels set
-     default: op
+    description: Permission for /duels set
+    default: op
   duels.cmd.arenas:
-     description: Permission for /duels arenas
-     default: op
+    description: Permission for /duels arenas
+    default: op
   duels.cmd.start:
-     description: Permission for /duels start
-     default: op
+    description: Permission for /duels start
+    default: op
   duels.cmd.test:
-     description: Permission for /duels test
-     default: true
+    description: Permission for /duels test
+    default: true
   duels.cmd.win:
     description: Permission for /duels win
     default: true
@@ -50,5 +45,5 @@ permissions:
     description: Permission for /duels join
     default: true
   duels.cmd.random:
-    description: Permission for /duels random
-    default: true
+        description: Permission for /duels random
+        default: true

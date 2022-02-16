@@ -7,12 +7,12 @@ namespace vixikhd\duels;
 use pocketmine\player\Player;
 use pocketmine\scheduler\Task;
 use pocketmine\Server;
-use vixikhd\duels\command\DuelsBaseCommand;
+use vixikhd\duels\commands\DuelsCommand;
 use vixikhd\duels\task\SortAsyncTask;
 
 /**
  * Class Stats
- * @package vixikhd\skywars
+ * @package vixikhd\duels
  */
 class Stats
 {
@@ -35,7 +35,7 @@ class Stats
 
         if (isset(Duels::getInstance()->dataProvider->config["scoreboards"]) && Duels::getInstance()->dataProvider->config["scoreboards"]["enabled"]) {
             Duels::getInstance()->getScheduler()->scheduleRepeatingTask(new class extends Task {
-                public function onRun(int $currentTick) : void
+                public function onRun() : void
                 {
                     Server::getInstance()->getAsyncPool()->submitTask(new SortAsyncTask(Stats::getAll()));
                 }

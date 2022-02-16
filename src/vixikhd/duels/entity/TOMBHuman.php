@@ -11,7 +11,7 @@ use pocketmine\network\mcpe\protocol\SetActorDataPacket as SetEntityDataPacket;
 use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataProperties;
 use pocketmine\player\Player;
 use vixikhd\duels\arena\Arena;
-use vixikhd\duels\SkyWars;
+use vixikhd\duels\Duels;
 
 class TOMBHuman extends Human{
 
