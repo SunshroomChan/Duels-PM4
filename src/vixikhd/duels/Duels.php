@@ -22,6 +22,10 @@ use pocketmine\world\World;
 use pocketmine\world\particle\FloatingTextParticle;
 use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\plugin\PluginBase;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\FloatTag;
 use pocketmine\utils\Config;
 use slapper\events\SlapperCreationEvent;
 use vixikhd\duels\arena\Arena;
@@ -127,60 +131,9 @@ class Duels extends PluginBase implements Listener
         $this->getScheduler()->scheduleRepeatingTask(new EntityJoinTask($this), 20);
     }
 
-    public function onSlapperCreate(SlapperCreationEvent $ev)
-    {
-        $entity = $ev->getEntity();
-        $line = $entity->getNameTag();
-        if ($line == "duelswin") {
-            $entity->namedtag->setString("duelswin", "duelswin");
-            $this->updateTopWin();
-
-        }
-    }
-
-    public function updateTopWin()
-    {
-        foreach ($this->getServer()->getWorldManager()->getWorlds() as $world) {
-            foreach ($world->getEntities() as $entity) {
-                if (!empty($entity->namedtag->setString("duelswin"))) {
-                    $topwin = $entity->namedtag->setString("duelswin", "");
-                    if ($topwin == "duelswin") {
-                        $swallet = new Config("plugin_data/Duels/winlb.yml", Config::YAML);
-                        $win = $swallet->getAll();
-                        $txt = "§l§bLEADERBOARD" . "§r\n§eTop Wins Duels" . "\n\n";
-                        arsort($win);
-                        $i = 1;
-                        foreach ($win as $name => $amount) {
-
-                            $txt .= "§a{$i}.§b§l{$name} §r§d- §c{$amount} §bwins\n";
-                            if ($i >= 10) {
-                                break;
-                            }
-                            ++$i;
-                        }
-                        $entity->setNameTag($txt);
-                        $entity->getNetworkProperties()->setFloat(EntityMetadataProperties::BOUNDING_BOX_HEIGHT, 3);
-                        $entity->getNetworkProperties()->setFloat(EntityMetadataProperties::SCALE, 0.0);
-                    }
-                }
-            }
-        }
-    }
-
     public function onDisable() : void
     {
         $this->dataProvider->save();
-        foreach ($this->getServer()->getWorldManager()->getWorlds() as $world) {
-            foreach ($world->getEntities() as $entity) {
-                if (!empty($entity->namedtag->getString("duelswin", ""))) {
-                    $lines = explode("\n", $entity->getNameTag());
-                    $lines[0] = $entity->namedtag->getString("duelswin", "");
-                    $nametag = implode("\n", $lines);
-                    $entity->setNameTag($nametag);
-
-                }
-            }
-        }
     }
 
     public function onJoin(PlayerJoinEvent $event)

@@ -20,8 +20,8 @@ declare(strict_types=1);
 
 namespace vixikhd\duels\arena;
 
-use pocketmine\world\World;
 use pocketmine\Server;
+use pocketmine\world\World;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -84,12 +84,12 @@ class MapReset
         if (!file_exists($this->plugin->plugin->getServer()->getDataPath() . "worlds" . DIRECTORY_SEPARATOR . $folderName)) {
             return null;
         }
-        if (!$this->plugin->plugin->getServer()->isLevelGenerated($folderName)) {
+        if (!$this->plugin->plugin->getServer()->getWorldManager()->isWorldGenerated($folderName)) {
             return null;
         }
 
-        if ($this->plugin->plugin->getServer()->isLevelLoaded($folderName)) {
-            $this->plugin->plugin->getServer()->getLevelByName($folderName)->unload(true);
+        if ($this->plugin->plugin->getServer()->getWorldManager()->isWorldLoaded($folderName)) {
+            $this->plugin->plugin->getServer()->getWorldManager()->unloadWorld($folderName);
         }
 
         $zipPath = $this->plugin->plugin->getDataFolder() . "saves" . DIRECTORY_SEPARATOR . $folderName . ".zip";
@@ -103,7 +103,7 @@ class MapReset
         $zipArchive->extractTo($this->plugin->plugin->getServer()->getDataPath() . "worlds");
         $zipArchive->close();
 
-        $this->plugin->plugin->getServer()->loadLevel($folderName);
-        return $this->plugin->plugin->getServer()->getLevelByName($folderName);
+        $this->plugin->plugin->getServer()->getWorldManager()->loadWorld($folderName);
+        return $this->plugin->plugin->getServer()->getWorldManager()->getWorldByName($folderName);
     }
 }

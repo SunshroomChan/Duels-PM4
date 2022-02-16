@@ -73,7 +73,7 @@ class JsonDataProvider extends DataProvider
     {
         foreach ($this->plugin->arenas as $fileName => $arena) {
             if ($arena->mapReset instanceof MapReset)
-                $arena->mapReset->loadMap($arena->level->getFolderName());
+                $arena->mapReset->loadMap($arena->world->getFolderName());
             $config = new Config($this->getDataFolder() . "arenas" . DIRECTORY_SEPARATOR . $fileName . ".json", Config::JSON);
             $config->setAll($arena->data);
             $config->save();

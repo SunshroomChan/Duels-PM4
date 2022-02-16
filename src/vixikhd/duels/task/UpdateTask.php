@@ -11,7 +11,7 @@ class UpdateTask extends Task
 {
 
     /**
-     * @var Duels
+     * @var Duels $plugin
      */
     private $plugin;
 
@@ -22,7 +22,6 @@ class UpdateTask extends Task
 
     public function onRun() : void
     {
-        $this->plugin->updateTopWin();
     }
 
 }

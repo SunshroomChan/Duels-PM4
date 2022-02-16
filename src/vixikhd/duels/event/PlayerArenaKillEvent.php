@@ -6,7 +6,6 @@ namespace vixikhd\duels\event;
 
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\plugin\PluginEvent;
-use pocketmine\player\Player;
 use vixikhd\duels\arena\Arena;
 use vixikhd\duels\Duels;
 

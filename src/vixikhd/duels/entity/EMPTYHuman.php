@@ -6,5 +6,5 @@ namespace vixikhd\duels\entity;
 
 use pocketmine\entity\Human;
 
-class NPCHuman extends Human{
+class EMPTYHuman extends Human{
 }

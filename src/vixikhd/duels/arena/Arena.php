@@ -47,6 +47,7 @@ use vixikhd\duels\form\SimpleForm;
 use vixikhd\duels\math\Vector3;
 use vixikhd\duels\provider\lang\Lang;
 use vixikhd\duels\Duels;
+use vixikhd\duels\arena\PlayerSnapshot;
 use vixikhd\duels\utils\ServerManager;
 
 /**
@@ -102,9 +103,7 @@ class Arena implements Listener
     public $rewards = [];
     /** @var World $world */
     public $world = null;
-    /** @var PlayerAll $PlayerList */
-    public $playerList = [];
-    /** @var PlayerSnapshots */
+    /** @var PlayerSnapshot */
     private $playerSnapshots = [];
     /** @var array $wantLeft */
     private $wantLeft = [];
@@ -512,7 +511,7 @@ class Arena implements Listener
             if ($target instanceof Player) {
                 $player->teleport($target->getPosition()->asVector3());
             }
-
+           return true;
         }
         );
         if (empty($this->players)) {
@@ -579,7 +578,7 @@ class Arena implements Listener
         if ($player->isOnline()) {
             $player->getEffects()->clear();
 
-            $player->setGamemode($this->plugin->getServer()->getDe());
+            $player->setGamemode(GameMode::ADVENTURE());
 
             $player->setHealth(20);
             $player->getHungerManager()->setFood(20);

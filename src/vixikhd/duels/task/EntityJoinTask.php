@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace vixikhd\duels\task;
 
 use pocketmine\scheduler\Task;
-use pocketmine\world\World;
 use pocketmine\Server;
 use vixikhd\duels\arena\Arena;
 use vixikhd\duels\entity\types\JoinEntity;

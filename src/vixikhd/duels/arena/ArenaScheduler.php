@@ -31,7 +31,7 @@ use pocketmine\world\Position;
 use pocketmine\player\Player;
 use pocketmine\scheduler\Task;
 use pocketmine\block\tile\Sign;
-use Scoreboards\Scoreboards;
+use libs\Scoreboards\Scoreboards;
 use vixikhd\duels\math\Time;
 use vixikhd\duels\math\Vector3;
 use vixikhd\duels\provider\lang\Lang;
@@ -371,29 +371,10 @@ class ArenaScheduler extends Task
                 }
 
                 foreach ($this->plugin->players as $player) {
-                    #PARTICLES
-                    $x = $player->getPosition()->getX();
-                    $y = $player->getPosition()->getY();
-                    $z = $player->getPosition()->getZ();
-                    $red = new DustParticle(new Color(252, 17, 17));
-                    $green = new DustParticle(new Color(102, 153, 102));
-                    $flame = new FlameParticle();
-                    $world = $player->getWorld();
 
-                    foreach ([$red, $green, $flame] as $particle) {
-                        $world->addParticle($particle);
-                        $pos = $player->getPosition();
-                        $red = new DustParticle(new Color(252, 17, 17));
-                        $orange = new DustParticle(new Color(252, 135, 17));
-                        $yellow = new DustParticle(new Color(252, 252, 17));
-                        $green = new DustParticle(new Color(17, 252, 17));
-                        $lblue = new DustParticle(new Color(94, 94, 252));
-                        $dblue = new DustParticle(new Color(17, 17, 252));
-                        foreach ([$red, $orange, $yellow, $green, $lblue, $dblue] as $particle) {
-                            $pos->getWorld()->addParticle($particle);
-                        }
-                    }
+
                 }
+
                 switch ($this->restartTime) {
                     case 0:
                         foreach ($this->plugin->players as $player) {
@@ -403,7 +384,7 @@ class ArenaScheduler extends Task
                             $player->getServer()->dispatchCommand($player, "specter quit DuelsBot");
                         }
                         foreach ($this->plugin->spectators as $player) {
-                            $player->removeAllEffects();
+                            $player->getEffects()->clear();
                             $this->plugin->disconnectPlayer($player, "", false, false, true);
                         }
 
@@ -434,18 +415,18 @@ class ArenaScheduler extends Task
         if ($signPos->getWorld()->getTile($signPos) === null) return;
 
         if (!$this->signSettings["custom"]) {
-            $signText = new SignText([
+            $signText = [
                 "§e§lDuels",
                 "§9[ §b? / ? §9]",
                 "§6Setup",
                 "§6Wait few sec..."
-            ]);
+            ];
 
 
             if ($this->plugin->setup) {
                 /** @var Sign $sign */
                 $sign = $signPos->getWorld()->getTile($signPos);
-                $sign->setText($signText);
+                $sign->setText(new SignText([$signText[0], $signText[1], $signText[2], $signText[3]]));
                 return;
             }
 
@@ -473,13 +454,13 @@ class ArenaScheduler extends Task
 
             /** @var Sign $sign */
             $sign = $signPos->getWorld()->getTile($signPos);
-            $sign->setText($text);
+            $sign->setText(new SignText([$signText[0], $signText[1], $signText[2], $signText[3]]));
         } else {
             $fix = function (string $text): string {
                 $phase = $this->plugin->phase === 0 ? "Lobby" : ($this->plugin->phase === 1 ? "InGame" : "Restarting...");
                 $map = ($this->plugin->world instanceof World) ? $this->plugin->world->getFolderName() : "---";
                 $text = str_replace("%phase", $phase, $text);
-                $text = str_replace("%ingame", count($this->plugin->players), $text);
+                $text = str_replace("%ingame", (string) count($this->plugin->players), $text);
                 $text = str_replace("%max", $this->plugin->data["slots"], $text);
                 $text = str_replace("%map", $map, $text);
                 return $text;
@@ -494,7 +475,7 @@ class ArenaScheduler extends Task
 
             /** @var Sign $sign */
             $sign = $signPos->getWorld()->getTile($signPos);
-            $sign->setText($signText[0], $signText[1], $signText[2], $signText[3]);
+            $sign->setText(new SignText([$signText[0], $signText[1], $signText[2], $signText[3]]));
         }
     }
 
