@@ -46,8 +46,9 @@ class DuelsCommand extends Command implements PluginOwned
      * @return mixed|void
      */
 
-    public function __construct()
-    {
+    public function __construct(Duels $plugin)
+ 
+        $this->plugin = $plugin
         parent::__construct("duels", "Duels Command", "§cUse /duels help or /dl help to see list of commands!", ["dl"]);
         $this->setPermission("duels.cmd");
     }
