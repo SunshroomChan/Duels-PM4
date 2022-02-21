@@ -4,6 +4,7 @@ version: 1.0.0
 main: vixikhd\duels\Duels
 author: SunshroomChan
 description: Simplfy 1v1 plugins with new features
+depends: [Scoreboards]
 
 extensions: [mysqli, yaml, json, zip]
 
