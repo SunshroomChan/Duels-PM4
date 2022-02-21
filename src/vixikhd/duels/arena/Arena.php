@@ -40,6 +40,7 @@ use pocketmine\player\GameMode;
 use pocketmine\Server;
 use pocketmine\block\tile\Tile;
 use pocketmine\utils\Config;
+use Scoreboards\Scoreboards;
 use vixikhd\duels\API;
 use vixikhd\duels\event\PlayerArenaWinEvent;
 use vixikhd\duels\form\CustomForm;
@@ -358,8 +359,10 @@ class Arena implements Listener
     public function onBreak(BlockBreakEvent $event)
     {
         $player = $event->getPlayer();
+        if ($this->inGame($player)) {
+            $event->cancel();
+        }
     }
-
     /**
      * @param BlockPlaceEvent $event
      */
@@ -367,6 +370,7 @@ class Arena implements Listener
     {
         $player = $event->getPlayer();
         if (!$this->inGame($player)) {
+
             return;
         }
 
@@ -452,7 +456,7 @@ class Arena implements Listener
                 $entity->setGamemode(GameMode::SPECTATOR());
                 $entity->setFlying(true);
 
-                $entity->sendTitle("§c§lYOU DIED!", "§eHold the Bed to quit!");
+                $entity->sendTitle("§c§lYOU DIED!", "§eYou didn't won this time!");
 
                 $entity->teleport(new Position($entity->getPosition()->getX(), Vector3::fromString($this->data["spawns"]["spawn-1"])->getY(), $entity->getPosition()->getZ(), $this->world));
                 $entity->getInventory()->setItem(8, ItemFactory::getInstance()->get(ItemIds::BED)->setCustomName("§r§eLeave the game\n§7[Use]"));
@@ -598,6 +602,7 @@ class Arena implements Listener
         $config->save();
 
         API::handleQuit($player, $this);
+        Scoreboards::getInstance()->remove($player);
 
         if ($death && $this->data["spectatorMode"]) $this->spectators[$player->getName()] = $player;
 
@@ -618,7 +623,7 @@ class Arena implements Listener
     }
 
     /**
-     * @param PlayerDropItemEvent $eventt
+     * @param PlayerDropItemEvent $event
      */
     public function onDrop(PlayerDropItemEvent $event)
     {
@@ -699,30 +704,32 @@ class Arena implements Listener
     {
         if (!$this->data["enabled"]) {
             $player->sendMessage("§7§lDuels>§r§c Arena is under setup!");
-            return false;
+            return;
         }
 
         if ($this->phase !== 0) {
             $player->sendMessage("§7§lDuels>§r§c Arena is already in game!");
-            return false;
+            return;
         }
 
         if (count($this->players) >= $this->data["slots"]) {
             $player->sendMessage(Lang::getMsg("arena.join.full"));
-            return false;
+            return;
         }
 
         if ($this->inGame($player)) {
             $player->sendMessage(Lang::getMsg("arena.join.player.ingame"));
-            return false;
+            return;
         }
 
         if ($this->scheduler->startTime <= 10) {
             $player->sendMessage("§c> Arena is starting...");
-            return false;
+            return;
         }
 
-        return API::handleJoin($player, $this, $force);
+        if (!API::handleJoin($player, $this, $force)) {
+            return;
+        }
 
         $this->scheduler->teleportPlayers = isset($this->data["lobby"]) || $this->data["lobby"] !== null;
 
@@ -887,7 +894,7 @@ class Arena implements Listener
             $entity->setGamemode(GameMode::SPECTATOR());
             $entity->setFlying(true);
 
-            $entity->sendTitle("§c§lYOU DIED!", "§eHold the Bed to quit!");
+            $entity->sendTitle("§c§lYOU DIED!", "§eYou didn't won this time!");
 
             $entity->teleport(new Position($entity->getPosition()->getX(), Vector3::fromString($this->data["spawns"]["spawn-1"])->getY(), $entity->getPosition()->getZ(), $this->world));
             $entity->getInventory()->setItem(8, ItemFactory::getInstance()->get(ItemIds::BED)->setCustomName("§r§eLeave the game\n§7[Use]"));
@@ -931,7 +938,7 @@ class Arena implements Listener
             $isLobbyExists = (isset($this->data["lobby"]) && $this->data["lobby"] !== null);
             if ($isLobbyExists) {
                 $isFromLobbyWorld = $event->getEntity()->getId() == $this->plugin->getServer()->getWorldManager()->getWorldByName($this->data["lobby"][1])->getId();
-                if ($isFromLobbyWorld && $this->world instanceof World && $event->getEntity()->getTargetEntity()->getId() !== $this->world->getId()) {
+                if ($isFromLobbyWorld && $this->world instanceof World && $event->getEntity()->getTargetEntity() !== null && $event->getEntity()->getTargetEntity()->getId() !== $this->world->getId()) {
                     $this->disconnectPlayer($player, "§7§lDuels> §r§aYou have successfully left the arena!", false, $player->getGamemode() == GameMode::SPECTATOR() || isset($this->spectators[$player->getName()]));
                 }
             } else {

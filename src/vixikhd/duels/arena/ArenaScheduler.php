@@ -26,15 +26,14 @@ use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
 use pocketmine\item\ItemIds;
 use pocketmine\world\World;
-use pocketmine\world\particle\{DustParticle, FlameParticle};
 use pocketmine\world\Position;
 use pocketmine\player\Player;
+use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\scheduler\Task;
 use pocketmine\block\tile\Sign;
-use libs\Scoreboards\Scoreboards;
+use Scoreboards\Scoreboards;
 use vixikhd\duels\math\Time;
 use vixikhd\duels\math\Vector3;
-use vixikhd\duels\provider\lang\Lang;
 
 /**
  * Class ArenaScheduler
@@ -107,7 +106,7 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 4, "   ");
                             $api->setLine($player, 5, "Players: §a" . count($this->plugin->players) . "/2");
                             $api->setLine($player, 6, "      ");
-                            $api->setLine($player, 7, "Starting in §a: " . $time);
+                            $api->setLine($player, 7, "Starting in: §a" . $time);
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
                         }
@@ -126,6 +125,8 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 7, "Starting in §a10");
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
+
+                            $this->addSound($player, "note.hat");
                         }
                     }
 
@@ -142,6 +143,8 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 7, "Starting in §a9");
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
+
+                            $this->addSound($player, "note.hat");
                         }
                     }
 
@@ -158,6 +161,8 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 7, "Starting in §a8");
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
+
+                            $this->addSound($player, "note.hat");
                         }
                     }
 
@@ -174,6 +179,8 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 7, "Starting in §a7");
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
+
+                            $this->addSound($player, "note.hat");
                         }
                     }
 
@@ -190,6 +197,8 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 7, "Starting in §a6");
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
+
+                            $this->addSound($player, "note.hat");
                         }
                     }
 
@@ -207,6 +216,7 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
 
+                            $this->addSound($player, "note.hat");
                             $player->sendTitle("§c5");
                         }
                     }
@@ -225,6 +235,7 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
 
+                            $this->addSound($player, "note.hat");
                             $player->sendTitle("§c4");
                         }
                     }
@@ -243,6 +254,7 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
 
+                            $this->addSound($player, "note.hat");
                             $player->sendTitle("§c3");
                         }
                     }
@@ -261,6 +273,7 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
 
+                            $this->addSound($player, "note.hat");
                             $player->sendTitle("§c2");
                         }
                     }
@@ -279,6 +292,7 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
 
+                            $this->addSound($player, "note.hat");
                             $player->sendTitle("§c1");
                         }
                     }
@@ -296,18 +310,19 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 7, "Game started");
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
+
+                            $this->addSound($player, "random.levelup", 0.5);
+                            $player->sendTitle("§a§lGAME STARTED!");
                         }
                     }
 
                     if ($this->startTime == 0) {
                         $this->plugin->startGame();
-                    } else {
                     }
                 } else {
                     if ($this->teleportPlayers && $this->startTime < $this->plugin->data["startTime"]) {
                         foreach ($this->plugin->players as $player) {
                             $player->teleport(Position::fromObject(Vector3::fromString($this->plugin->data["lobby"][0]), $this->plugin->plugin->getServer()->getWorldManager()->getWorldByName($this->plugin->data["lobby"][1])));
-
                             $api = Scoreboards::getInstance();
                             $api->new($player, "ObjectiveName", "§l§eDUELS");
                             $api->setLine($player, 1, "§7" . date("d/m/Y"));
@@ -316,7 +331,7 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 4, "   ");
                             $api->setLine($player, 5, "Players: §a" . count($this->plugin->players) . "/2");
                             $api->setLine($player, 6, "      ");
-                            $api->setLine($player, 7, "Waiting for players");
+                            $api->setLine($player, 7, "Waiting for players...");
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
                         }
@@ -355,24 +370,16 @@ class ArenaScheduler extends Task
                     $api->new($player, "ObjectiveName", "§l§eDUELS");
                     $api->setLine($player, 1, "§7" . date("d/m/Y"));
                     $api->setLine($player, 2, " ");
-                    $api->setLine($player, 3, "Time left: §a" . $time);
+                    $api->setLine($player, 3, "Restarting in: §a" . $time);
                     $api->setLine($player, 4, "   ");
                     $api->setLine($player, 5, "Map: §a" . $this->plugin->world->getFolderName());
-                    $api->setLine($player, 6, "    ");
-                    $api->setLine($player, 7, "Opponents: §a");
-                    $api->setLine($player, 8, "Opponents not found");
-                    $api->setLine($player, 9, "       ");
-                    $api->setLine($player, 10, "§ewww.servername.com");
+                    $api->setLine($player, 6, "       ");
+                    $api->setLine($player, 7, "§ewww.servername.com");
                 }
 
                 if($this->restartTime == 0) {
                     $api = Scoreboards::getInstance();
                     $api->remove($player);
-                }
-
-                foreach ($this->plugin->players as $player) {
-
-
                 }
 
                 switch ($this->restartTime) {
@@ -381,7 +388,7 @@ class ArenaScheduler extends Task
                             $player->getEffects()->clear();
                             $this->plugin->disconnectPlayer($player, "", false, false, true);
                             $player->setAllowFlight(false);
-                            $player->getServer()->dispatchCommand($player, "specter quit DuelsBot");
+                            $player->getInventory()->clearAll();
                         }
                         foreach ($this->plugin->spectators as $player) {
                             $player->getEffects()->clear();
@@ -516,5 +523,15 @@ class ArenaScheduler extends Task
                 break;
         }
         return Time::calculateTime($time);
+    }
+    public function addSound($player, string $sound = '', float $pitch = 1){
+        $pk = new PlaySoundPacket();
+        $pk->x = $player->getPosition()->getX();
+        $pk->y = $player->getPosition()->getY();
+        $pk->z = $player->getPosition()->getZ();
+        $pk->volume = 4;
+        $pk->pitch = $pitch;
+        $pk->soundName = $sound;
+        $player->getNetworkSession()->sendDataPacket($pk);
     }
 }

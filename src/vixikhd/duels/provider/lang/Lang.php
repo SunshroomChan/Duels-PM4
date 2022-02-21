@@ -53,7 +53,7 @@ class Lang {
 
         $msg = self::$messages[$index];
         foreach ($params as $index => $param) {
-            $msg = str_replace("{%{$index}}", $param, $msg);
+            $msg = str_replace("{%{$index}}", (string) $param, $msg);
         }
 
         $msg = str_replace("{%line}", "\n", $msg);

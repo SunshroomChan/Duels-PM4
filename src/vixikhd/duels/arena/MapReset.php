@@ -89,7 +89,7 @@ class MapReset
         }
 
         if ($this->plugin->plugin->getServer()->getWorldManager()->isWorldLoaded($folderName)) {
-            $this->plugin->plugin->getServer()->getWorldManager()->unloadWorld($folderName);
+            $this->plugin->plugin->getServer()->getWorldManager()->unloadWorld(Server::getInstance()->getWorldManager()->getWorldByName($folderName));
         }
 
         $zipPath = $this->plugin->plugin->getDataFolder() . "saves" . DIRECTORY_SEPARATOR . $folderName . ".zip";

@@ -2,29 +2,29 @@
 # Language file for SkyWars v1.1.0
 
 # Messages
-arena.join: '§7{%0} joined the game §e(§b{%1}§e/§b{12§e)'
-arena.quit: '§{%0} left the game §e(§b{%1}§e/§b12§e)' # todo: check spectator
-arena.quit.player: '§aYou have successfully left the game.'
+arena.join: '§7{%0} joined the game §e(§b{%1}§e/§b2§e)'
+arena.quit: '§{%0} left the game §e(§b{%1}§e/§b2§e)' # todo: check spectator
+arena.quit.player: '§aYou have successfully left the game!'
 arena.start: ' '
 arena.win.message: '§7{%0} §ewon the game at §7{%1}'
-arena.join.ingame: '§7§lSkyWars>§r§c Arena is running!'
-arena.join.restart: '§7§lSkyWars>§r§c Arena is restarting!'
-arena.join.full: '§7§lSkyWars>§r§c Arena is starting!'
+arena.join.ingame: '§7§lDuels>§r§c Arena is running!'
+arena.join.restart: '§7§lDuels>§r§c Arena is restarting!'
+arena.join.full: '§7§lDuels>§r§c Arena is starting!'
 arena.join.player.ingame: '§7You are already in game!'
 
 # Death messages
-arena.death.killed: '§7{%0} §ewas killed by §7{%1} §e(§b{%2}§e/§b12§e)'
-arena.death.exploded: '§7{%0} §bxploded §e(§b{%1}§e/§b12§e)'
-arena.death.fell: '§7{%0} §bfell from a high place §e(§b{%1}§e/§b12§e)'
-arena.death.void.player: '§7{%0} §ewas knocked into the void by §7{%1} §e(§b{%2}§e/§b12§e)'
-arena.death.void: '§7{%0} §bfell into the void §e(§b{%1}§e/§b12§e)'
+arena.death.killed: '§7{%0} §ewas killed by §7{%1} §e(§b{%2}§e/§b2§e)'
+arena.death.exploded: '§7{%0} §bxploded §e(§b{%1}§e/§b2§e)'
+arena.death.fell: '§7{%0} §bfell from a high place §e(§b{%1}§e/§b2§e)'
+arena.death.void.player: '§7{%0} §ewas knocked into the void by §7{%1} §e(§b{%2}§e/§b2§e)'
+arena.death.void: '§7{%0} §bfell into the void §e(§b{%1}§e/§b2§e)'
 arena.death: '§7{%0} §eDeath. '
 
 # Projectile
 arena.projectile: '§bYou hit {%0} §bby Arrow and target HP now {%1}!'
 
 # Tips (leave empty to hide)
-arena.waiting: '§cWaiting for more players ({%0}/12).'
+arena.waiting: '§cWaiting for more players ({%0}/2).'
 arena.starting: ' '
 
 ...

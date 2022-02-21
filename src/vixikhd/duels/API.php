@@ -12,7 +12,7 @@ use vixikhd\duels\Stats;
 
 /**
  * Class API
- * @package vixikhd\skywars
+ * @package vixikhd\duels
  *
  * API For server owners, here you can handle all
  */
@@ -52,7 +52,7 @@ class API
         // your code
         Stats::addKill($player);
 
-        $winconfig = new Config("plugin_data/SkyWars/lb/win.yml", Config::YAML);
+        $winconfig = new Config("plugin_data/Duels/lb/win.yml", Config::YAML);
         $winconfig->set($player->getName(), $winconfig->get($player->getName()) + 1);
         $winconfig->save();
         if (class_exists(DataStorage::class))

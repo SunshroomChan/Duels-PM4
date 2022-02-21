@@ -13,7 +13,7 @@ class UpdateTask extends Task
     /**
      * @var Duels $plugin
      */
-    private $plugin;
+    public $plugin;
 
     public function __construct(Duels $plugin)
     {

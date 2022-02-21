@@ -23,11 +23,8 @@ namespace vixikhd\duels\commands;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\PluginOwned;
-use pocketmine\plugin\PluginOwnedTrait;
-use pocketmine\item\WrittenBook;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
-use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as C;
 use vixikhd\duels\arena\Arena;
 use vixikhd\duels\Duels;
@@ -46,11 +43,12 @@ class DuelsCommand extends Command implements PluginOwned
      * @return mixed|void
      */
 
-    public function __construct(Duels $plugin){
+    public function __construct(Duels $plugin) {
         $this->plugin = $plugin;
 
         parent::__construct("duels", "Duels Command", "§cUse /duels help or /dl help to see list of commands!", ["dl"]);
         $this->setPermission("duels.cmd");
+        $this->setAliases(["dl"]);
     }
 
     /** var Duels $plugin */
@@ -118,7 +116,7 @@ class DuelsCommand extends Command implements PluginOwned
                 $arena = $this->plugin->arenas[$args[1]];
 
                 foreach ($arena->players as $player) {
-                    $player->teleport($this->plugin->getServer()->getDefaultLevel()->getSpawnLocation());
+                    $player->teleport($this->plugin->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
                 }
 
                 if (is_file($file = $this->plugin->getDataFolder() . "arenas" . DIRECTORY_SEPARATOR . $args[1] . ".yml")) unlink($file);
@@ -219,19 +217,6 @@ class DuelsCommand extends Command implements PluginOwned
                 }
                 $sender->getServer()->dispatchCommand($sender, "slapper spawn human duelswin");
                 $sender->sendMessage(C::GREEN . "LeaderBoards spawn coordinates set in your location, please re-login...");
-                break;
-            case "test":
-                if (!$sender->hasPermission("duels.cmd.test")) {
-                    $sender->sendMessage("§cYou have not permissions to use this command!");
-                    break;
-                }
-                if (!$sender instanceof Player) {
-                    $sender->sendMessage("§cThis command can be used only in-game!");
-                    break;
-                }
-                $sender->getServer()->dispatchCommand($sender, "specter spawn ZAlphaGanz");
-                $sender->getServer()->dispatchCommand($sender, "specter chat ZAlphaGanz /duels random");
-                $sender->getServer()->dispatchCommand($sender, "duels random");
                 break;
             case "arenas":
                 if (!$sender->hasPermission("duels.cmd.arenas")) {
