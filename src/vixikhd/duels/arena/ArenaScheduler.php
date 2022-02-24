@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 namespace vixikhd\duels\arena;
 
+use BlockHorizons\Fireworks\item\Fireworks;
 use pocketmine\block\utils\SignText;
 use pocketmine\color\Color;
 use pocketmine\item\Item;
@@ -310,30 +311,33 @@ class ArenaScheduler extends Task
                             $api->setLine($player, 7, "Game started");
                             $api->setLine($player, 8, "          ");
                             $api->setLine($player, 9, "§ewww.servername.com");
-
-                            $this->addSound($player, "random.levelup", 0.5);
-                            $player->sendTitle("§a§lGAME STARTED!");
                         }
                     }
 
                     if ($this->startTime == 0) {
                         $this->plugin->startGame();
+                        $this->addSound($player, "random.levelup", 0.5);
+                        $player->sendTitle("§a§lGAME STARTED!");
                     }
-                } else {
+                }
+                else {
+                    foreach ($this->plugin->players as $player) {
+                        $api = Scoreboards::getInstance();
+                        $api->new($player, "ObjectiveName", "§l§eDUELS");
+                        $api->setLine($player, 1, "§7" . date("d/m/Y"));
+                        $api->setLine($player, 2, "  ");
+                        $api->setLine($player, 3, "Map: §a" . $this->plugin->world->getFolderName());
+                        $api->setLine($player, 4, "   ");
+                        $api->setLine($player, 5, "Players: §a" . count($this->plugin->players) . "/2");
+                        $api->setLine($player, 6, "      ");
+                        $api->setLine($player, 7, "Waiting for players...");
+                        $api->setLine($player, 8, "          ");
+                        $api->setLine($player, 9, "§ewww.servername.com");
+                        $api->setLine($player, 9, "§ewww.servername.com");
+                    }
                     if ($this->teleportPlayers && $this->startTime < $this->plugin->data["startTime"]) {
                         foreach ($this->plugin->players as $player) {
                             $player->teleport(Position::fromObject(Vector3::fromString($this->plugin->data["lobby"][0]), $this->plugin->plugin->getServer()->getWorldManager()->getWorldByName($this->plugin->data["lobby"][1])));
-                            $api = Scoreboards::getInstance();
-                            $api->new($player, "ObjectiveName", "§l§eDUELS");
-                            $api->setLine($player, 1, "§7" . date("d/m/Y"));
-                            $api->setLine($player, 2, "  ");
-                            $api->setLine($player, 3, "Map: §a" . $this->plugin->world->getFolderName());
-                            $api->setLine($player, 4, "   ");
-                            $api->setLine($player, 5, "Players: §a" . count($this->plugin->players) . "/2");
-                            $api->setLine($player, 6, "      ");
-                            $api->setLine($player, 7, "Waiting for players...");
-                            $api->setLine($player, 8, "          ");
-                            $api->setLine($player, 9, "§ewww.servername.com");
                         }
                     }
 
@@ -354,8 +358,8 @@ class ArenaScheduler extends Task
                         $api->setLine($player, 4, "   ");
                         $api->setLine($player, 5, "Map: §a" . $this->plugin->world->getFolderName());
                         $api->setLine($player, 6, "    ");
-                        $api->setLine($player, 7, "Opponents: §a");
-                        $api->setLine($player, 8, $opponentsname . " " . $opponentshealt);
+                        $api->setLine($player, 7, "Opponents: §a" . $opponentsname);
+                        $api->setLine($player, 8,  "Their health §a" . $opponentshealt);
                         $api->setLine($player, 9, "       ");
                         $api->setLine($player, 10, "§ewww.servername.com");
                     }
@@ -376,12 +380,12 @@ class ArenaScheduler extends Task
                     $api->setLine($player, 6, "       ");
                     $api->setLine($player, 7, "§ewww.servername.com");
                 }
-
-                if($this->restartTime == 0) {
-                    $api = Scoreboards::getInstance();
-                    $api->remove($player);
+                foreach ($this->plugin->players as $player) {
+                    /** @var Fireworks $fw */
+                    $fw = ItemFactory::getInstance()->get(ItemIds::FIREWORKS);
+                    $fw->addExplosion(Fireworks::TYPE_CREEPER_HEAD, Fireworks::COLOR_GREEN, "", false, false);
+                    $fw->setFlightDuration(2);
                 }
-
                 switch ($this->restartTime) {
                     case 0:
                         foreach ($this->plugin->players as $player) {
@@ -389,6 +393,7 @@ class ArenaScheduler extends Task
                             $this->plugin->disconnectPlayer($player, "", false, false, true);
                             $player->setAllowFlight(false);
                             $player->getInventory()->clearAll();
+                            $player->getArmorInventory()->clearAll();
                         }
                         foreach ($this->plugin->spectators as $player) {
                             $player->getEffects()->clear();

@@ -24,6 +24,7 @@ use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\event\Event;
 use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
 use pocketmine\item\ItemIds;
@@ -108,6 +109,7 @@ class Arena implements Listener
     private $playerSnapshots = [];
     /** @var array $wantLeft */
     private $wantLeft = [];
+
 
     /**
      * Arena constructor.
@@ -340,7 +342,9 @@ class Arena implements Listener
         $player->sendTitle("§6§lVICTORY!", "§7!");
         $player->setAllowFlight(true);
 
-        $this->plugin->getServer(new PlayerArenaWinEvent($this->plugin, $player, $this));
+        /** @var Event $event */
+        $event = (new PlayerArenaWinEvent($this->plugin, $player, $this));
+        $event->call();
         $this->plugin->getServer()->broadcastMessage(Lang::getMsg("arena.win.message", [$player->getName(), $this->world->getFolderName()]));
         API::handleWin($player, $this);
     }
