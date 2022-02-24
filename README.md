@@ -3,8 +3,6 @@ A plugin simplify 1v1 mode for Pocketmine-MP!
 # Changelog
 This plugin now is in use production<br>
 Now fully supported to PM4!<br>
-# Missing
-+ When waiting for player, it doesn't show the Scoreboard
 # Todos
 + Making GUI kit<br>
 + Firework win event<br>
